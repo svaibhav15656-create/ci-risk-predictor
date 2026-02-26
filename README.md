@@ -1,6 +1,6 @@
 # Commit Risk Prediction using Machine Learning
 
-This project predicts risky commits using commit metadata.
+This project predicts whether a Pull Request (PR) will fail CI before running the pipeline.
 
 ## Features
 - Commit message length
