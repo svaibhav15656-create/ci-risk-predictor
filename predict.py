@@ -1,16 +1,20 @@
+from flask import Flask, request, jsonify
 import joblib
 
-# Load model
+app = Flask(__name__)
 model = joblib.load("risk_model.pkl")
 
-# Take user input
-msg_len = int(input("Enter commit message length: "))
-files_changed = int(input("Enter number of files changed: "))
+@app.route("/predict", methods=["POST"])
+def predict():
+    data = request.json
+    msg_len = data["msg_len"]
+    files_changed = data["files_changed"]
 
-# Predict
-prediction = model.predict([[msg_len, files_changed]])
+    prediction = model.predict([[msg_len, files_changed]])[0]
 
-if prediction[0] == 1:
-    print("⚠ This commit is predicted as RISKY")
-else:
-    print("✅ This commit is predicted as SAFE")
+    return jsonify({
+        "risk": int(prediction)
+    })
+
+if __name__ == "__main__":
+    app.run(port=5000)
