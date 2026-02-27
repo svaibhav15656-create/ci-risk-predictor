@@ -44,3 +44,6 @@ print(classification_report(y_test, y_pred))
 # 8️⃣ Save model
 joblib.dump(model, "risk_model.pkl")
 print("\nModel saved as risk_model.pkl")
+print("Feature Importance:")
+for feature, importance in zip(X.columns, model.feature_importances_):
+    print(feature, ":", importance)
